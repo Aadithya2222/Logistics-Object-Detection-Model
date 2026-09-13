@@ -1,21 +1,20 @@
 version: '3.8'
 
 services:
-  logistics-api:
+  logistics-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: logistics-reasoning-api
+    container_name: logistics-app
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "7860:7860"
     environment:
-      - PORT=8000
-    volumes:
-      - ./weights:/workspace/weights:ro
+      - PORT=7860
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
       interval: 30s
-      timeout: 10s
+      timeout: 5s
       retries: 3
       start_period: 15s
+

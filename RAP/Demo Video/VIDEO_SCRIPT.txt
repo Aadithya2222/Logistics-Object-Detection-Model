@@ -1,5 +1,5 @@
-LogiVision System Presentation Script
-====================================
+Logistics Object Detection & Reasoning System Script
+===================================================
 
-Welcome judges! Today I am presenting LogiVision - a Real-Time Logistics Object Detection
-and Reasoning API built using RT-DETR-Large...
+Welcome! Presenting an Autonomous Logistics Object Detection and Visual Reasoning API
+built using RT-DETR-Large, FastAPI, Docker, Terraform, and AWS EC2...
