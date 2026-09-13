@@ -10,7 +10,7 @@
 
 ## Selected Subset
 
-We selected exactly 2,500 images from this dataset.
+I selected exactly 2,500 images from this dataset (1,500 train, 500 val, 500 test).
 
 | Class | Train | Val | Test | Total |
 |-------|-------|-----|------|-------|

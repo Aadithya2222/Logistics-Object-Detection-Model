@@ -1,7 +1,7 @@
 # Pre-Hackathon Screening Memo: Constrained Object Detection & Reasoning API
 
 **Track:** Computer Vision + Applied ML Engineering (with a light Agentic component)  
-**Author:** ML Engineering Candidate  
+**Author:** Aadithya R  
 **Domain:** Warehouse Logistics & Cargo Object Detection  
 **Model Architecture:** RT-DETR-L (Real-Time Detection Transformer Large)  
 **Deployment:** FastAPI REST API (Dockerized, Uvicorn)
@@ -12,7 +12,7 @@
 
 Warehouses and freight consolidation hubs handle tens of thousands of parcels, pallets, containers, and industrial handling equipment daily. Automated visual perception in this domain must be real-time, low-latency, and capable of operating under challenging industrial conditions: high occlusion, variable artificial lighting, scale variance, and overlapping objects.
 
-To solve this, we selected a constrained 5-class ontology:
+To solve this, I selected a constrained 5-class ontology:
 - `cardboard box` (Target ID 0)
 - `forklift` (Target ID 1)
 - `freight container` (Target ID 2)
@@ -35,11 +35,11 @@ By including three non-COCO industrial classes alongside `forklift` and `truck`,
 Data was sourced from the Roboflow Universe public benchmark:
 - **Project:** `large-benchmark-datasets/logistics-sz9jr` (Version 1, CC BY 4.0).
 - **Original Size:** ~99,238 images across 20 logistics/warehouse classes.
-- **Acquisition Strategy:** Rather than downloading the prohibitive 4.86 GB archive or using rate-limited web scrapers, we engineered a custom selective HTTP Range-request streaming engine (`scripts/prepare_dataset.py`). It reads the remote zip archive's Central Directory over HTTP, locates annotation files, and extracts strictly the required images and bounding boxes on the fly in ~14.5 minutes.
+- **Acquisition Strategy:** Rather than downloading the prohibitive 4.86 GB archive or using rate-limited web scrapers, I engineered a custom selective HTTP Range-request streaming engine (`scripts/prepare_dataset.py`). It reads the remote zip archive's Central Directory over HTTP, locates annotation files, and extracts strictly the required images and bounding boxes on the fly in ~14.5 minutes.
 
 ### Mid-Project Pivot (Technical Justification)
-- **Initial Attempt & Failure:** In our initial sampling run, multi-class images caused severe class skew (>387 wood pallets vs. 300 boxes in train), and Roboflow's pre-augmented image duplicates produced identical SHA256 hashes across different file stems, failing our 12-check verification audit.
-- **Engineering Course Correction:** We refactored `scripts/prepare_dataset.py` to:
+- **Initial Attempt & Failure:** In my initial sampling run, multi-class images caused severe class skew (>387 wood pallets vs. 300 boxes in train), and Roboflow's pre-augmented image duplicates produced identical SHA256 hashes across different file stems, failing my 12-check verification audit.
+- **Engineering Course Correction:** I refactored `scripts/prepare_dataset.py` to:
   1. Filter strictly for pure single-class images (`len(classes_in_file) == 1`).
   2. Deduplicate images by base file stem (`stem.split('_jpg.rf.')[0]`), discarding artificial augmentations.
   3. Re-map class indices (0–4) and strip all 15 out-of-scope classes (e.g., helmets, cones, vests).
@@ -78,7 +78,7 @@ The model was evaluated using standard Object Detection metrics: Precision, Reca
 
 ## 5. Detailed Root-Cause Analysis of Five Genuine Failure Cases
 
-A reliable ML system must acknowledge and diagnose its failure modes. We identified five distinct failure archetypes on the test set (`artifacts/failure_cases/`):
+A reliable ML system must acknowledge and diagnose its failure modes. I identified five distinct failure archetypes on the test set (`artifacts/failure_cases/`):
 
 ### Failure Case 1: Extreme Occlusion (Forklift obscured by container)
 - **Symptom:** Forklift partially parked behind a freight container; only the overhead safety cage and mast visible.
