@@ -1,0 +1,19 @@
+DATASET VERIFICATION REPORT
+Generated: 2026-09-13T14:39:21.496899
+Data dir: C:\Aadithya projects\logistics-object-detection\data\logistics_2500
+
+  PASS  1_total_images: found 2500, expected 2500
+  PASS  2_train_count: found 1500, expected 1500
+  PASS  3_val_count: found 500, expected 500
+  PASS  4_test_count: found 500, expected 500
+  PASS  5_class_distribution: all classes match expected per-split counts
+  PASS  6_only_allowed_classes: all IDs in [0, 1, 2, 3, 4] are allowed
+  PASS  7_annotations_exist: all images have non-empty label files
+  PASS  8_valid_class_ids: all class IDs valid
+  PASS  9_no_corrupt_images: all images are valid
+  PASS  10_no_dup_filenames: all filenames unique
+  PASS  11_no_dup_content: all image contents unique
+  PASS  12_valid_bboxes: all bounding boxes valid
+
+Total: 12 | PASS: 12 | FAIL: 0
+OVERALL: PASS

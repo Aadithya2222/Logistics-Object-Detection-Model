@@ -1,0 +1,42 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Executables & Portables
+cloudflared.exe
+*.exe
+
+# Base weights (auto-downloaded from ultralytics if missing)
+rtdetr-l.pt
+weights/yolo26n.pt
+
+# Training runs & intermediate checkpoints
+runs/
+wandb/
+.cache/
+mlruns/
+*.log
+
+# Dataset image binaries (stored locally, reproducible via scripts/prepare_dataset.py)
+data/logistics_2500/*/images/
+data/logistics_2500/*.cache
+data/logistics_2500/*/*.cache
+
+# Secrets
+.env
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

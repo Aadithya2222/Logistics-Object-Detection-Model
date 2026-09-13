@@ -1,0 +1,17 @@
+# Logistics Object Detection Dataset
+# 2,500 images, 5 classes, YOLO format
+
+path: C:/Aadithya projects/logistics-object-detection/data/logistics_2500
+
+train: train/images
+val: val/images
+test: test/images
+
+nc: 5
+
+names:
+  0: cardboard box
+  1: forklift
+  2: freight container
+  3: wood pallet
+  4: truck

@@ -1,0 +1,49 @@
+============================================================
+SYSTEM INFORMATION
+Generated: 2026-09-13T14:39:35.430645
+============================================================
+
+── Operating System ──────────────────────────────────────
+  OS          : Windows 11
+  OS Version  : 10.0.26200
+  Machine     : AMD64
+  Node        : Aadhi
+
+── Python ───────────────────────────────────────────────
+  Version     : 3.12.13 (main, Mar  3 2026, 15:01:35) [MSC v.1944 64 bit (AMD64)]
+  Executable  : C:\Aadithya projects\logistics-object-detection\.venv\Scripts\python.exe
+
+── CPU ──────────────────────────────────────────────────
+  CPU         : Intel64 Family 6 Model 186 Stepping 2, GenuineIntel
+  Cores (P/L) : 8 / 12
+
+── Memory ───────────────────────────────────────────────
+  RAM Total   : 16.79 GB
+  RAM Avail   : 3.04 GB
+
+── Disk ─────────────────────────────────────────────────
+  Disk Total  : 510.88 GB
+  Disk Free   : 219.80 GB
+
+── GPU ──────────────────────────────────────────────────
+  nvidia-smi  : NVIDIA GeForce RTX 3050 6GB Laptop GPU, 6144 MiB, 592.27, 8.6
+  nvcc        : nvcc not found
+  Torch GPU   : NVIDIA GeForce RTX 3050 6GB Laptop GPU
+  VRAM        : 6.44 GB
+
+── PyTorch ──────────────────────────────────────────────
+  torch       : 2.5.1+cu121
+  CUDA avail  : True
+  CUDA ver    : 12.1
+
+── Ultralytics ──────────────────────────────────────────
+  ultralytics : 8.4.150
+
+── Other Packages ───────────────────────────────────────
+  numpy       : 2.5.2
+  opencv      : 5.0.0
+  Pillow      : 12.3.0
+  fastapi     : 0.141.1
+  roboflow    : 1.4.2
+
+============================================================

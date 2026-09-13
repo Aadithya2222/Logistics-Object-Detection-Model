@@ -1,0 +1,21 @@
+=============================================================
+PRE-TRAINING RT-DETR SMOKE TEST REPORT (CHECKPOINT 2)
+=============================================================
+Model          : RT-DETR-L (rtdetr-l.pt)
+Device         : cuda:0
+Images tested  : 10
+Average latency: 747.94 ms/image (1.3 FPS)
+
+Detailed Inferences:
+- -1-DRY-CONTAINER-_-_png_jpg.rf.af49c95763d7179243f25c6bb47f3050.jpg: 7020.91 ms, 2 detections (suitcase (0.78), truck (0.41))
+- -114_jpg.rf.88d726593e0c96445da5aea732a52fe2.jpg: 60.65 ms, 1 detections (truck (0.97))
+- -117_jpg.rf.7ae57309e7f8c5f73cb10c75c97b472e.jpg: 50.78 ms, 2 detections (truck (0.96), bench (0.53))
+- -16_jpg.rf.a30444bc12e5bb965f0831edd670ecf6.jpg: 51.92 ms, 3 detections (truck (0.65), train (0.31), bed (0.31))
+- -17_jpg.rf.7ac8836609167c6078152358f3e1f40f.jpg: 49.9 ms, 1 detections (train (0.69))
+- -3163ca687f_jpg.rf.7a1301fbad4a2740b7a051d1aad31303.jpg: 51.27 ms, 3 detections (truck (0.43), person (0.34), bus (0.27))
+- -326_jpg.rf.d776ea71afc51fe32475cb4e74c68e3e.jpg: 51.0 ms, 7 detections (truck (0.93), truck (0.63), truck (0.44))
+- -345_jpg.rf.355f59b172fb5d4309de6224ecd95809.jpg: 41.56 ms, 17 detections (truck (0.62), train (0.45), train (0.44))
+- -430_jpg.rf.b8e2130a9e9d27f3264911df8764bd41.jpg: 50.24 ms, 1 detections (truck (0.97))
+- -481_jpg.rf.5e8181b7a6dc256f61ac4330277c7a83.jpg: 51.17 ms, 10 detections (truck (0.68), truck (0.53), truck (0.44))
+
+STATUS: PASS
