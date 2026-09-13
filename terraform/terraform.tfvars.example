@@ -1,0 +1,17 @@
+# Example Terraform Configuration Variables
+# Copy or rename this file to terraform.tfvars to customize your deployment.
+
+aws_region        = "ap-south-1"
+instance_type     = "t3.small"
+environment       = "production"
+repo_url          = "https://github.com/Aadithya2222/Logistics-Object-Detection-Model.git"
+
+# REQUIRED: Set your specific public IP CIDR for SSH access
+# Replace YOUR_PUBLIC_IP with your actual public IPv4 address (e.g. ["203.0.113.25/32"])
+admin_cidr_blocks = ["YOUR_PUBLIC_IP/32"]
+
+# Optional: AWS SSH Key Pair name if you wish to SSH into the instance
+# key_name        = "my-aws-ssh-key"
+
+# Optional: Set to true if you require an Elastic IP (Static Public IP)
+enable_elastic_ip = false

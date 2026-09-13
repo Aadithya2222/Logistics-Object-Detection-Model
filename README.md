@@ -11,7 +11,7 @@
 **Computer Vision + Natural Language Reasoning API**  
 *Author: Aadithya R | Track: Computer Vision + Applied ML Engineering*
 
-[📄 Written Engineering Memo](docs/MEMO.md) • [📊 Evaluation Documentation](docs/EVALUATION.md) • [📡 API Reference](docs/API.md) • [📊 Verification Audit](artifacts/dataset_verification.txt)
+[📄 AWS EC2 Deployment Guide](docs/AWS_DEPLOYMENT.md) • [📄 Written Engineering Memo](docs/MEMO.md) • [📊 Evaluation Documentation](docs/EVALUATION.md) • [📊 Verification Audit](artifacts/dataset_verification.txt)
 
 </div>
 
@@ -95,19 +95,19 @@ Questions sent to `POST /ask` are routed by intent (`COUNT`, `PRESENCE`, `LIST`,
 
 ---
 
-## 7. How to Run Locally
+## 7. Deployment Artifact vs. Temporary Live Demo
 
-### Option A: Direct Python Server
-```bash
-# 1. Activate virtual environment
-.\.venv\Scripts\activate
+### Deployment Environments Summary
 
-# 2. Start Uvicorn server
-python -m uvicorn app.main:app --host 0.0.0.0 --port 7860
-```
-Access interactive Swagger UI at: `http://localhost:7860/docs`
+| Environment Type | Base URL / Host | Purpose & SLA |
+| :--- | :--- | :--- |
+| **Local Docker** | `http://localhost:7860` | Development, local debugging, and unit/integration test suite execution. |
+| **AWS EC2 Production** | `http://<EC2_PUBLIC_IP>` *(or Nginx `:80`/`:443` domain)* | **24/7 Autonomous Hackathon Hosting**. Public Nginx reverse proxy forwarding to internal port `7860`. |
+| **Cloudflare Quick Tunnel** | `https://prices-debug-match-twist.trycloudflare.com` | **Temporary Development Demo Endpoint**. Used only for temporary external testing while local tunnel process runs. |
 
-### Option B: Docker Container Deployment
+### Deployment Artifact (Primary & Reproducible)
+The primary deployment artifact for this project is the **Docker container** built from the root `Dockerfile`. It encapsulates the full RT-DETR-L model, PyTorch inference engine, post-processing guardrails, and FastAPI application logic for consistent, reproducible local or cloud execution.
+
 ```bash
 # 1. Build Docker image
 docker build -t logistics-object-detection .
@@ -116,14 +116,47 @@ docker build -t logistics-object-detection .
 docker run -d -p 7860:7860 -e PORT=7860 --name logistics-app logistics-object-detection
 ```
 
+Local Swagger UI documentation is accessible at: `http://localhost:7860/docs`
+
+### Temporary Development Demo Endpoint
+For temporary live testing and external API evaluation, a **Cloudflare Quick Tunnel** forwards external HTTP requests to the locally running Docker container:
+
+- **Temporary Base URL**: `https://prices-debug-match-twist.trycloudflare.com`
+- **Interactive Swagger UI**: `https://prices-debug-match-twist.trycloudflare.com/docs`
+
+> [!IMPORTANT]
+> **Deployment Clarification**:
+> - The Cloudflare Quick Tunnel URL is a **temporary development demo endpoint** used strictly to expose the locally running API container for external evaluation.
+> - It is **NOT** a persistent 24/7 production server, guaranteed uptime host, or SLA-backed production deployment.
+> - The tunnel URL functions only while the local server and background tunnel session remain active, and will expire or change when the local process is terminated.
+> - The complete, production-reproducible deployment artifact remains the **Docker image / repository code**, which can be deployed anywhere via `docker run` on port `7860`.
+
 ---
 
-## 8. API Endpoints
+## 8. API Endpoints & Example Usage
+
+The API exposes four core HTTP endpoints available locally (`http://localhost:7860`), on AWS EC2 via Nginx (`http://<EC2_PUBLIC_IP>`), or via the temporary demo URL (`https://prices-debug-match-twist.trycloudflare.com`):
 
 - **`GET /health`**: Liveness probe returning `{"status": "ok", "version": "1.0.0", "model_loaded": true}`.
-- **`GET /classes`**: Returns list of 5 supported object classes.
-- **`POST /detect`**: Accepts image file, returns array of detected objects with class, confidence, and bounding box coordinates.
-- **`POST /ask`**: Accepts image file + question string, returns intent, detection array, and natural language answer.
+- **`GET /classes`**: Returns array of 5 supported object class names.
+- **`POST /detect`**: Accepts image file, returns array of detected objects with class, confidence, and bounding box coordinates `[xmin, ymin, xmax, ymax]`.
+- **`POST /ask`**: Accepts image file + `question` string, returns detected intent, filtered objects, and natural language reasoning answer.
+
+### cURL Examples
+
+```bash
+# 1. Health Check
+curl -X GET "http://localhost:7860/health"
+
+# 2. Object Detection
+curl -X POST "http://localhost:7860/detect" \
+  -F "file=@sample.jpg"
+
+# 3. Visual Reasoning Question
+curl -X POST "http://localhost:7860/ask" \
+  -F "file=@sample.jpg" \
+  -F "question=How many freight containers are visible?"
+```
 
 ---
 
@@ -142,10 +175,55 @@ Test modules covered:
 
 ---
 
-## 10. System Limitations & Deployment Status
+## 10. AWS EC2 Production Deployment Overview
 
-- **Hugging Face Space**: The repository is uploaded to Hugging Face Space `Aadithya2201/logistics-object-detection`. (Note: The Space is currently paused on Hugging Face due to CPU-basic hardware quota allocation).
+To maintain 24/7 API availability for hackathon evaluation without keeping a local PC running, deploy to **AWS EC2**:
+
+- **Target Instance**: `t3.small` (2 vCPU, 2 GiB RAM, Ubuntu 24.04 LTS, `ap-south-1` region).
+- **Public Reverse Proxy Architecture**: Nginx accepts traffic on `:80` (with `:443` reserved for future SSL) and proxies requests internally to FastAPI on `:7860`.
+- **Process Management**: `docker-compose.yml` with `restart: unless-stopped` ensures automatic restart after crashes or EC2 host reboot.
+- **Security Group Inbound Rules**:
+  - SSH (TCP 22): Administrator IP only (Default is empty `[]` in Terraform for security; specify `admin_cidr_blocks = ["YOUR_PUBLIC_IP/32"]` in `terraform.tfvars`).
+  - HTTP (TCP 80) / HTTPS (TCP 443): `0.0.0.0/0` (Public web traffic).
+  - *Port 7860 is NOT exposed publicly in Security Group.*
+- **Memory Safety**: Includes documented 2–4 GB optional EC2 swap configuration buffer.
+- **Deployment Guide**: Complete step-by-step instructions, Nginx setup, swap configuration, and troubleshooting commands are documented in [`docs/AWS_DEPLOYMENT.md`](docs/AWS_DEPLOYMENT.md).
+
+> [!CAUTION]
+> **AWS Billing Note**: Free Tier eligibility depends on individual AWS console account status. Resources created outside applicable Free Tier thresholds will incur charges.
+
+
+---
+
+## 11. Infrastructure as Code (Terraform)
+
+The repository provides production-grade **Terraform Infrastructure as Code (IaC)** templates in the [`terraform/`](file:///C:/Aadithya%20projects/logistics-object-detection/terraform) directory to automate AWS EC2 provisioning:
+
+- **Automated Provisioning**: Provisions `t3.small` EC2 instance, 20 GiB `gp3` encrypted EBS disk, and Security Group (22, 80, 443).
+- **Automated Bootstrap**: `user-data.sh` automatically updates Ubuntu 24.04 LTS, configures 2GB swap space, installs Docker/Compose/Nginx, clones the GitHub repo, builds the container, and sets up Nginx proxy.
+- **Reproducible Teardown**: Run `terraform destroy` to cleanly dismantle all AWS resources when evaluation ends.
+- **Usage Commands**:
+  ```bash
+  cd terraform
+  cp terraform.tfvars.example terraform.tfvars
+  terraform init
+  terraform plan
+  terraform apply
+  ```
+
+*See [`docs/AWS_DEPLOYMENT.md`](docs/AWS_DEPLOYMENT.md) for full Terraform workflow and outputs.*
+
+---
+
+## 12. System Limitations & Deployment Notes
+
+- **Primary Artifact**: The Docker container (`Dockerfile`) provides 100% reproducible deployment on any host with Docker installed.
+- **Hugging Face Space**: The repository structure is also uploaded to Hugging Face Space `Aadithya2201/logistics-object-detection` (currently paused due to CPU quota limits).
 - **Model Limitations**:
   1. *Spatial Partitioning*: Large shipping containers spanning full image frames may occasionally be partitioned into two adjacent container boxes ($\text{IoU} < 0.80$).
   2. *Texture Ambiguity*: Weathered wood textures on crates or stacked boxes can occasionally be misclassified as `wood pallet`.
   3. *Small Objects*: Distant cardboard boxes occupying $<10$ pixels have lower recall.
+
+
+
+

@@ -1,0 +1,19 @@
+# Terraform local state files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# Terraform log files
+crash.log
+crash.*.log
+
+# Override variables file containing local secrets/custom IP
+*.tfvars
+!terraform.tfvars.example
+
+# Environment files
+.env
