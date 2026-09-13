@@ -1,0 +1,5 @@
+LogiVision System Presentation Script
+====================================
+
+Welcome judges! Today I am presenting LogiVision - a Real-Time Logistics Object Detection
+and Reasoning API built using RT-DETR-Large...

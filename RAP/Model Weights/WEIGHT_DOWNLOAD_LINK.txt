@@ -1,0 +1,2 @@
+Model Weights relative location in workspace: weights/best.pt
+Size: 263,681,309 bytes
