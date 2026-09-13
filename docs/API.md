@@ -1,8 +1,8 @@
 # API Documentation
 
 ### Public Live URL (Cloudflare Tunnel):
-- **Base URL:** `https://termination-consists-amazing-servers.trycloudflare.com`
-- **Interactive Swagger Docs:** [https://termination-consists-amazing-servers.trycloudflare.com/docs](https://termination-consists-amazing-servers.trycloudflare.com/docs)
+- **Base URL:** `https://prices-debug-match-twist.trycloudflare.com`
+- **Interactive Swagger Docs:** [https://prices-debug-match-twist.trycloudflare.com/docs](https://prices-debug-match-twist.trycloudflare.com/docs)
 - **Local Fallback:** `http://127.0.0.1:8000`
 
 ---

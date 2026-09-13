@@ -128,8 +128,8 @@ Every significant action is recorded here with timestamp, result, and checkpoint
 - **Result**:
   - FastAPI server running in background daemon on port 8000 (`uvicorn app.main:app`).
   - Secure Cloudflare Tunnel activated (`cloudflared tunnel --url http://127.0.0.1:8000`).
-  - Public HTTPS URL live: `https://termination-consists-amazing-servers.trycloudflare.com`
-  - Interactive Swagger Docs live: `https://termination-consists-amazing-servers.trycloudflare.com/docs`
+  - Public HTTPS URL live: `https://prices-debug-match-twist.trycloudflare.com`
+  - Interactive Swagger Docs live: `https://prices-debug-match-twist.trycloudflare.com/docs`
   - Tested over the public internet with live images:
     - `GET /health` -> 200 OK
     - `GET /classes` -> 200 OK

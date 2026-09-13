@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="truckBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="truckCab" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="truckGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <filter id="shadowT" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadowT)">
+    <!-- Cargo Box Body -->
+    <rect x="20" y="32" width="56" height="38" rx="2" fill="url(#truckBody)"/>
+    <!-- Cargo Door Seam -->
+    <line x1="48" y1="32" x2="48" y2="70" stroke="#94a3b8" stroke-width="1.5"/>
+    <!-- Chassis Rail -->
+    <rect x="18" y="70" width="84" height="6" fill="#334155"/>
+    <!-- Cab -->
+    <path d="M 76 44 L 88 44 L 98 56 L 98 70 L 76 70 Z" fill="url(#truckCab)"/>
+    <!-- Windshield Glass -->
+    <polygon points="86,47 95,57 80,57 80,47" fill="url(#truckGlass)" opacity="0.9"/>
+    <!-- Front Bumper & Headlight -->
+    <rect x="96" y="65" width="4" height="5" fill="#f59e0b" rx="1"/>
+    <!-- Wheels -->
+    <!-- Rear Duals -->
+    <circle cx="32" cy="76" r="9" fill="#0f172a"/>
+    <circle cx="32" cy="76" r="4" fill="#94a3b8"/>
+    <circle cx="48" cy="76" r="9" fill="#0f172a"/>
+    <circle cx="48" cy="76" r="4" fill="#94a3b8"/>
+    <!-- Front Steer Wheel -->
+    <circle cx="88" cy="76" r="9" fill="#0f172a"/>
+    <circle cx="88" cy="76" r="4" fill="#94a3b8"/>
+  </g>
+</svg>

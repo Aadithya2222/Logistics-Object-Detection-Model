@@ -13,7 +13,7 @@
 **A Solo Pre-Hackathon Engineering Project: Computer Vision + Natural Language Reasoning**  
 *Author: Aadithya R | Track: Computer Vision + Applied ML Engineering (Light Agentic Component)*
 
-[🌐 Live Web Console (Swagger UI)](https://termination-consists-amazing-servers.trycloudflare.com/docs) • [🏠 Live API Root](https://termination-consists-amazing-servers.trycloudflare.com/) • [📄 Written Engineering Memo](docs/MEMO.md) • [📡 API Reference](docs/API.md) • [📊 Verification Audit](artifacts/dataset_verification.txt)
+[🌐 Live Web Console (Swagger UI)](https://prices-debug-match-twist.trycloudflare.com/docs) • [🏠 Live API Root](https://prices-debug-match-twist.trycloudflare.com/) • [📄 Written Engineering Memo](docs/MEMO.md) • [📡 API Reference](docs/API.md) • [📊 Verification Audit](artifacts/dataset_verification.txt)
 
 </div>
 
@@ -25,10 +25,10 @@ I have deployed the complete system live to the public internet with GPU hardwar
 
 | Service | Clickable URL | Description |
 |---|---|---|
-| **🚀 Interactive Web Console** | [https://termination-consists-amazing-servers.trycloudflare.com/docs](https://termination-consists-amazing-servers.trycloudflare.com/docs) | Open the Swagger UI in your browser to drag & drop any image and ask questions interactively! |
-| **🏠 API Base URL** | [https://termination-consists-amazing-servers.trycloudflare.com/](https://termination-consists-amazing-servers.trycloudflare.com/) | Live HTML landing page and base REST API root. |
-| **🩺 Health Check Probe** | [https://termination-consists-amazing-servers.trycloudflare.com/health](https://termination-consists-amazing-servers.trycloudflare.com/health) | Real-time liveness check returning `{"status": "ok", "version": "1.0.0"}`. |
-| **🏷️ Supported Object Classes** | [https://termination-consists-amazing-servers.trycloudflare.com/classes](https://termination-consists-amazing-servers.trycloudflare.com/classes) | Returns the 5 industrial categories (including 3 non-COCO classes). |
+| **🚀 Interactive Web Console** | [https://prices-debug-match-twist.trycloudflare.com/docs](https://prices-debug-match-twist.trycloudflare.com/docs) | Open the Swagger UI in your browser to drag & drop any image and ask questions interactively! |
+| **🏠 API Base URL** | [https://prices-debug-match-twist.trycloudflare.com/](https://prices-debug-match-twist.trycloudflare.com/) | Live HTML landing page and base REST API root. |
+| **🩺 Health Check Probe** | [https://prices-debug-match-twist.trycloudflare.com/health](https://prices-debug-match-twist.trycloudflare.com/health) | Real-time liveness check returning `{"status": "ok", "version": "1.0.0"}`. |
+| **🏷️ Supported Object Classes** | [https://prices-debug-match-twist.trycloudflare.com/classes](https://prices-debug-match-twist.trycloudflare.com/classes) | Returns the 5 industrial categories (including 3 non-COCO classes). |
 
 ---
 
@@ -343,7 +343,7 @@ I diagnosed **5 real failure modes** on the test set ([`docs/MEMO.md`](docs/MEMO
 
 ### Method 1: Instant Interactive Cloud (Zero Setup)
 Visit the live Swagger UI directly in your browser:  
-👉 **[Open Live Swagger Web Console](https://termination-consists-amazing-servers.trycloudflare.com/docs)**
+👉 **[Open Live Swagger Web Console](https://prices-debug-match-twist.trycloudflare.com/docs)**
 
 ### Method 2: One-Command Docker Run (10% Bonus Rubric)
 ```bash
@@ -375,7 +375,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 ### 1. Detect Objects in an Image (`POST /detect`)
 ```bash
-curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/detect" \
+curl -X POST "https://prices-debug-match-twist.trycloudflare.com/detect" \
   -H "Accept: application/json" \
   -F "file=@data/logistics_2500/test/images/-1-DRY-CONTAINER-_-_png_jpg.rf.af49c95763d7179243f25c6bb47f3050.jpg"
 ```
@@ -396,7 +396,7 @@ curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/det
 
 ### 2. Natural Language Question Answering (`POST /ask`)
 ```bash
-curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/ask" \
+curl -X POST "https://prices-debug-match-twist.trycloudflare.com/ask" \
   -H "Accept: application/json" \
   -F "file=@data/logistics_2500/test/images/-1-DRY-CONTAINER-_-_png_jpg.rf.af49c95763d7179243f25c6bb47f3050.jpg" \
   -F "question=How many freight containers are in this image?"
@@ -415,7 +415,7 @@ curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/ask
 
 ### 3. Honest Guardrail Demonstration (Insufficient Information)
 ```bash
-curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/ask" \
+curl -X POST "https://prices-debug-match-twist.trycloudflare.com/ask" \
   -H "Accept: application/json" \
   -F "file=@data/logistics_2500/test/images/0002184_jpg.rf.3728718cee1a07b6077976f734ab0770.jpg" \
   -F "question=How many cardboard boxes are visible?"

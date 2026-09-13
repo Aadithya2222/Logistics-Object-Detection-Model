@@ -9,13 +9,19 @@ Run with:
     uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 """
 
+from pathlib import Path
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile, status
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.detector import get_detector
 from app.reasoning import answer_question
 from app.schemas import AskResponse, DetectResponse, Detection, BBox
 from app.utils import load_image_bytes
+
+ROOT = Path(__file__).parent.parent
+STATIC_DIR = ROOT / "app" / "static"
+TEMPLATES_DIR = ROOT / "app" / "templates"
 
 app = FastAPI(
     title="Logistics Object Detection & Reasoning API",
@@ -27,75 +33,32 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Mount static files for images and assets
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
 
 # ── Root route ─────────────────────────────────────────────────────────────────
 
 @app.get("/", tags=["Meta"])
 async def root(request: Request):
-    """Root endpoint welcoming visitors and directing to /docs and health check."""
+    """Root endpoint serving the high-fidelity UI landing page."""
     accept = request.headers.get("accept", "")
-    if "text/html" in accept:
-        html_content = """<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logistics Object Detection & Reasoning API</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 40px 20px; display: flex; justify-content: center; }
-    .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; max-width: 800px; width: 100%; padding: 36px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
-    h1 { color: #38bdf8; margin-top: 0; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
-    p { color: #94a3b8; line-height: 1.6; font-size: 1.05rem; }
-    .badge { display: inline-block; background: #0369a1; color: #e0f2fe; padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin: 3px; }
-    .badge.non-coco { background: #b45309; color: #fef3c7; }
-    .btn { display: inline-block; background: #0284c7; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-right: 12px; margin-top: 15px; transition: background 0.2s; }
-    .btn:hover { background: #0369a1; }
-    .btn-secondary { background: #334155; }
-    .btn-secondary:hover { background: #475569; }
-    .section { margin-top: 28px; border-top: 1px solid #334155; padding-top: 20px; }
-    code { background: #0f172a; color: #38bdf8; padding: 3px 8px; border-radius: 4px; font-size: 0.9rem; }
-    pre { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; overflow-x: auto; color: #e2e8f0; font-size: 0.88rem; }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <h1>📦 Logistics Object Detection & Reasoning API</h1>
-    <p>Welcome! This API serves an end-to-end <strong>RT-DETR (Real-Time Detection Transformer)</strong> model fine-tuned on industrial warehouse logistics imagery, paired with a deterministic natural language reasoning engine.</p>
-    
-    <div>
-      <a class="btn" href="/docs">🚀 Open Interactive Swagger UI</a>
-      <a class="btn btn-secondary" href="/health">🩺 Health Check</a>
-      <a class="btn btn-secondary" href="/classes">🏷️ Supported Classes</a>
-    </div>
+    if "application/json" in accept and "text/html" not in accept:
+        return {
+            "message": "Logistics Object Detection & Reasoning API",
+            "docs": "/docs",
+            "health": "/health",
+            "classes": "/classes",
+            "status": "online",
+            "model": "RT-DETR-Large",
+        }
 
-    <div class="section">
-      <h3>🏷️ Supported Object Classes (Including 3 Non-COCO Categories)</h3>
-      <span class="badge non-coco">0: cardboard box (Non-COCO)</span>
-      <span class="badge">1: forklift</span>
-      <span class="badge non-coco">2: freight container (Non-COCO)</span>
-      <span class="badge non-coco">3: wood pallet (Non-COCO)</span>
-      <span class="badge">4: truck</span>
-    </div>
+    template_file = TEMPLATES_DIR / "index.html"
+    if template_file.exists():
+        return HTMLResponse(content=template_file.read_text(encoding="utf-8"), status_code=200)
 
-    <div class="section">
-      <h3>📡 Quick API Test (cURL)</h3>
-      <pre># Ask a natural language question about an image
-curl -X POST "https://termination-consists-amazing-servers.trycloudflare.com/ask" \\
-  -F "file=@warehouse_photo.jpg" \\
-  -F "question=How many freight containers are in this image?"</pre>
-    </div>
-  </div>
-</body>
-</html>"""
-        return HTMLResponse(content=html_content, status_code=200)
-    return {
-        "message": "Logistics Object Detection & Reasoning API",
-        "docs": "/docs",
-        "health": "/health",
-        "classes": "/classes",
-        "status": "online",
-        "model": "RT-DETR-Large",
-    }
+    return RedirectResponse(url="/docs")
 
 
 # ── /detect ───────────────────────────────────────────────────────────────────
