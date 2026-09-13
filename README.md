@@ -1,3 +1,13 @@
+---
+title: Logistics Object Detection & Reasoning API
+emoji: 🚢
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # 📦 Autonomous Logistics Object Detection & Reasoning System
 
 <div align="center">
@@ -8,7 +18,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Cloudflare](https://img.shields.io/badge/Cloudflare-HTTPS_Tunnel-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.badge?style=for-the-badge)
++
 
 **A Solo Pre-Hackathon Engineering Project: Computer Vision + Natural Language Reasoning**  
 *Author: Aadithya R | Track: Computer Vision + Applied ML Engineering (Light Agentic Component)*
