@@ -371,7 +371,7 @@ def build_pdf(filename: Path):
     ))
     story.append(Paragraph(
         "<b>Reproducibility & Verification:</b> Fixed seed <code>42</code>, PyTorch 2.0+, Docker Compose (<code>docker compose up --build</code>). "
-        "Full test suite passing <b>45/45 unit tests</b> (<code>pytest tests/</code>).",
+        "Full test suite passing <b>48/48 unit tests</b> (<code>pytest tests/</code>).",
         body_style
     ))
 
@@ -382,3 +382,4 @@ def build_pdf(filename: Path):
 if __name__ == "__main__":
     build_pdf(OUTPUT_PDF_DOCS)
     build_pdf(OUTPUT_PDF_ROOT)
+

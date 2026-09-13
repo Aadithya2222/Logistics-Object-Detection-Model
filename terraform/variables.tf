@@ -25,7 +25,7 @@ variable "ami_id" {
 variable "root_volume_size" {
   type        = number
   description = "Root EBS volume size in GB."
-  default     = 20
+  default     = 40
 }
 
 variable "repo_url" {
