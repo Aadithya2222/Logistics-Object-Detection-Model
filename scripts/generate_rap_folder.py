@@ -250,7 +250,7 @@ def generate_deployment_pdf():
 
     story.append(Paragraph("5. Environment Variables (.env)", h1_s))
     story.append(Paragraph(
-        "<code>ROBOFLOW_API_KEY=5YSIVQsasg8jgmgPq2WV\n"
+        "<code>ROBOFLOW_API_KEY=your_roboflow_api_key_here\n"
         "PORT=8000\n"
         "MODEL_PATH=weights/best.pt</code>",
         code_s
